@@ -21,6 +21,16 @@ stud.config(['$routeProvider',
             }).when('/groups/:id/', {
                 templateUrl: vars.static_template + 'group_detail.html',
                 controller: 'groupCtrl'
+            }).when('/students/:id/', {
+                templateUrl: vars.static_template + 'student_detail.html',
+                controller: 'studentDetailCtrl'
+            }).when('/group/add/', {
+                templateUrl: vars.static_template + 'group_add.html',
+                controller: 'groupAddCtrl'
             });
     }]
 );
+stud.config(['$httpProvider', function($httpProvider) {
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';    }
+]);

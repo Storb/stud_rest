@@ -1,4 +1,9 @@
-{{ group.name }}
-<div ng-repeat="student in group">
-        {{ student }}
-    </div>
+<h3>Group: {{ group.name}}</h3>
+<div ng-repeat="student in group.students">
+    <a href="#/students/{{ student.id }}">
+        {{ student.surname }}
+        {{ student.first_name }}
+        {{ student.last_name }}
+        {{ student.id }}
+    </a>
+</div>

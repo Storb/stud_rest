@@ -1,4 +1,4 @@
-var studServices = angular.module('studentServices', ['ngResource']);
+var studServices = angular.module('studentServices', ['ngResource', 'ngRoute']);
 
 studServices.factory('Students',
     function($resource){
@@ -12,7 +12,12 @@ studServices.factory('GroupsList',
     }
 );
 
-studServices.factory('Group',
+studServices.factory('Group',['$resource',
     function($resource){
-        return $resource('/api/groups/:id/');
-});
+        return $resource('/api/groups/:Id/', {Id:'@id'});
+}]);
+studServices.factory('Student',
+    function($resource){
+        return $resource('/api/students/:Id/', {Id:'@id'});
+    }
+);
