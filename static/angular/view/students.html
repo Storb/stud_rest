@@ -1,9 +1,22 @@
-<div ng-repeat="student in students">
-    {{ student.surname }}
-    {{ student.first_name }}
-    {{ student.patronymic }}
-    {{ student.date_birthday }}
-    <button ng-click="edit(student)">edit</button>
-    <button ng-click="del(student)">delete</button>
-</div>
+<table class="table table-bordered">
+    <tr>
+        <td> № </td>
+        <td> Last name </td>
+        <td> First name </td>
+        <td> Patronymic </td>
+        <td> Card number </td>
+        <td> Birthday </td>
+
+    </tr>
+    <tr ng-repeat="student in students">
+        <td>{{ index + 1 }}</td>
+        <td>{{ student.surname }}</td>
+        <td>{{ student.first_name }}</td>
+        <td>{{ student.patronymic }}</td>
+        <td>{{ student.card_number}}</td>
+        <td>{{ student.date_birthday }}</td>
+        <td><button ng-click="edit(student)">edit</button>
+        <button ng-click="del(student)">delete</button></td>
+    </tr>
+</table>
 

@@ -126,7 +126,7 @@ studControllers.controller('groupDeleteCtrl', function($scope, $location, $http,
 });
 studControllers.controller('groupDetailCtrl',
     function($scope, Group, $routeParams, $http, $location){
-        $scope.group = Group.get({Id: $routeParams.id})
+        $scope.group = Group.get({Id: $routeParams.id});
         $scope.del = function () {
             $http.delete('/api/groups/' + $scope.group.id + '/', $scope.group).success(function () {
                 $location.path('/groups/');
@@ -183,5 +183,6 @@ studControllers.controller('indexCtrl', function($scope, $location, $http){
     $http.get('/api/students/').success(function(data){
         $scope.students = data;
     });
+
 
 });

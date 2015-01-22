@@ -58,6 +58,10 @@ REST_FRAMEWORK = {
         # 'rest_framework.permissions.IsAuthenticated',
     )
 }
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'stud_db.auth.EmailAuth',
+)
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',

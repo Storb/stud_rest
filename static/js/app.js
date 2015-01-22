@@ -11,7 +11,7 @@ var stud = angular.module('studApp', [
 ]);
 
 stud.config(['$routeProvider',
-    function($routeProvider){
+    function($routeProvider, $ui){
         $routeProvider.when('/groups/',{
                 templateUrl: vars.static_template + 'groups.html',
                 controller: 'groupsListCtrl'

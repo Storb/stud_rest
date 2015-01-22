@@ -21,3 +21,11 @@ studServices.factory('Student',
         return $resource('/api/students/:Id/', {Id:'@id'});
     }
 );
+
+studServices.factory('Auth', function($http){
+   return {
+       load: function() {
+           return $http.get('/api/')
+       }
+   }
+});

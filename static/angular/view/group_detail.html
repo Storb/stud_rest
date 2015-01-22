@@ -1,9 +1,11 @@
 <div class="row">
     <div class="col-xs-4">
+        {% if user.is_stuff %}
         <h3>Group: {{ group.name}}</h3>
         <button type="button" class="btn btn-primary btn-lg active" ng-click="del()">delete</button>
         <button type="button" class="btn btn-primary btn-lg active" ng-click="edit()">edit</button>
         <br/>
+        {% endif %}
         {{ group.elder.surname }}
         {{ group.elder.first_name }}
     </div>
@@ -19,7 +21,6 @@
 
             </tr>
             <tr ng-repeat="student in group.students">
-                <td ng-show="show">{{ elder }}</td>
                 <td>{{ $index + 1 }}</td>
                 <td>{{ student.surname }}</td>
                 <td>{{ student.first_name }}</td>
