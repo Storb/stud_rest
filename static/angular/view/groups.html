@@ -1,6 +1,23 @@
-<a href="#/group/add/">Create group</a>
-<div ng-repeat="group in groupslist">
-    <a href="#/groups/{{ group.id }}">{{ group.name }}</a>
-    <a href="/group/delete/">delete</a>
+<div class="row">
+    <div class="col-xs-4">
+        <a href="#/group/add/" class="btn btn-primary btn-lg active" role="button">Create group</a><br/>
+        <a href="#/student/add" class="btn btn-primary btn-lg active" role="button">Create student</a>
+    </div>
+    <div class="col-xs-6">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <tr>
+                    <td>№</td>
+                    <td>Name group</td>
+                    <td>Number students</td>
+                </tr>
+                <tr class="table" ng-repeat="group in groupslist">
+                    <td class="active">{{ $index+1 }}</td>
+                    <td><a href="#/groups/{{ group.id }}">{{ group.name }}</a></td>
+                    <td>{{ group.students.length }}</td>
+                    <a class="ng-hide" href="#/groups/delete/{{ group.id}}">delete</a>
+                </tr>
+            </table>
+        </div>
+    </div>
 </div>
-

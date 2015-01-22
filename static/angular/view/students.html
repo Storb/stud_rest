@@ -1,8 +1,9 @@
-<div ng-controller="studentsCtrl">
-    <div ng-repeat="student in students">
-        {{ student.first_name }}
-        {{ student.last_name }}
-        {{ student.surname }}
-        {{ student.date_birthday }}
-    </div>
+<div ng-repeat="student in students">
+    {{ student.surname }}
+    {{ student.first_name }}
+    {{ student.patronymic }}
+    {{ student.date_birthday }}
+    <button ng-click="edit(student)">edit</button>
+    <button ng-click="del(student)">delete</button>
 </div>
+

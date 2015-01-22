@@ -10,7 +10,7 @@ urlpatterns = patterns('',
     url(r'^api/users/$', views.UsersList.as_view(), name='users'),
     url(r'^api/users/(?P<pk>[0-9]+)/$', views.UserDetail.as_view(), name='user-detail'),
     url(r'^api/students/(?P<pk>[0-9]+)/$', views.StudentDetail.as_view(), name='students-detail'),
-    url(r'^api/groups/(?P<pk>[0-9]+)/students/$', views.StudentList.as_view(), name='students'),
+    url(r'^api/students/$', views.StudentList.as_view(), name='students'),
 )
 
 

@@ -9,7 +9,7 @@ class StudentSerializer(serializers.ModelSerializer):
         owner = serializers.ReadOnlyField(source='owner.username')
         model = Student
         field = (
-            'surname', 'first_name', 'last_name',
+            'surname', 'first_name', 'patronymic',
             'date_birthday', 'card_number', 'group'
         )
 

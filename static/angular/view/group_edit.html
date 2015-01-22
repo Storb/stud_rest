@@ -1,0 +1,5 @@
+<form class="form-horizontal" name="groupForm" role="form">
+    <input type="text" id="name" placeholder="Group name" ng-model="group.name"/><br>
+    <select id="elder" ng-model="group.elder" ng-options="student.surname for student in group.students" required></select>
+<button ng-click="submit()" value="Save">Save</button>
+</form>

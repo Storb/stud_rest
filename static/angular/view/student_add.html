@@ -1,0 +1,9 @@
+<form name="studentForm" role="form">
+    <select id="student" ng-model="group" ng-options="group.name for group in groups" required></select><br>
+    <input type="text" id="surname" placeholder="Surname" ng-model="student.surname"/><br>
+    <input type="text" id="first_name" placeholder="First name" ng-model="student.first_name"/><br>
+    <input type="text" id="patronymic" placeholder="Last name" ng-model="student.patronymic"/><br>
+    <input type="text" id="card_number" placeholder="card number" ng-model="student.card_number"/><br>
+    <input type="text" id="date_birthday" placeholder="birthday" ng-model="student.date_birthday"/><br>
+    <button ng-click="submit()">save</button>
+</form>

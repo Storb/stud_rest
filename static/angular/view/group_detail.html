@@ -1,9 +1,41 @@
-<h3>Group: {{ group.name}}</h3>
-<div ng-repeat="student in group.students">
-    <a href="#/students/{{ student.id }}">
-        {{ student.surname }}
-        {{ student.first_name }}
-        {{ student.last_name }}
-        {{ student.id }}
-    </a>
+<div class="row">
+    <div class="col-xs-4">
+        <h3>Group: {{ group.name}}</h3>
+        <button type="button" class="btn btn-primary btn-lg active" ng-click="del()">delete</button>
+        <button type="button" class="btn btn-primary btn-lg active" ng-click="edit()">edit</button>
+        <br/>
+        {{ group.elder.surname }}
+        {{ group.elder.first_name }}
+    </div>
+    <div class="col-xs-6">
+        <table class="table table-bordered">
+            <tr>
+                <td> № </td>
+                <td> Last name </td>
+                <td> First name </td>
+                <td> Patronymic </td>
+                <td> Card number </td>
+                <td> Birthday </td>
+
+            </tr>
+            <tr ng-repeat="student in group.students">
+                <td ng-show="show">{{ elder }}</td>
+                <td>{{ $index + 1 }}</td>
+                <td>{{ student.surname }}</td>
+                <td>{{ student.first_name }}</td>
+                <td>{{ student.patronymic }}</td>
+                <td>{{ student.card_number }}</td>
+                <td>{{ student.date_birthday }}</td>
+            </tr>
+        </table>
+        <hr />
+        <form name="studentForm" role="form">
+            <input type="text" id="surname" placeholder="Surname" ng-model="student.surname"/>
+            <input type="text" id="first_name" placeholder="First name" ng-model="student.first_name"/>
+            <input type="text" id="Patronymic" placeholder="Patronymic" ng-model="student.patronymic"/>
+            <input type="text" id="card_number" placeholder="card number" ng-model="student.card_number"/>
+            <input type="text" id="date_birthday" placeholder="birthday" ng-model="student.date_birthday"/>
+            <button ng-click="submit()">Add student</button>
+        </form>
+    </div>
 </div>

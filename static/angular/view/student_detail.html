@@ -1,3 +1,7 @@
-<div ng-repeat="i in student">
-    {{ i }}
-</div>
+<p>Surname: {{ student.surname }}</p>
+<p>First name: {{ student.first_name }}</p>
+<p>Last name: {{ student.patronymic }}</p>
+<p>Card number: {{ student.card_number }}</p>
+<p>Birthday: {{ student.date_birthday }}</p>
+<button ng-click="del()">delete</button>
+<button ng-click="edeet()">edit</button>

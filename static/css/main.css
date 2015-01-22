@@ -1,0 +1,35 @@
+.col-md-8 {
+    padding: 10;
+}
+
+.row {
+    margin-right: 15px;
+    margin-left: 15px;
+}
+
+.col-xs-4 {
+    width: 15%;
+}
+
+.col-xs-6 {
+    width: 85%;
+}
+
+.col-md-8 {
+    width: 80%;
+}
+
+.col-md-4 {
+    width: 20%;
+}
+.btn-lg {
+    padding: 10px 16px;
+    font-size: 10px;
+    line-height: 1.3333333;
+    border-radius: 6px;
+}
+.btn-primary.active {
+    color: #050505;
+    border-color: #FFFFFF;
+    background-color: #58cbfe;
+}
