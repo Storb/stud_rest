@@ -7,14 +7,19 @@
         <div class="table-responsive">
             <table class="table table-bordered">
                 <tr>
-                    <td>№</td>
-                    <td>Name group</td>
-                    <td>Number students</td>
+                    <td align="center"> <strong>№</strong></td>
+                    <td align="center"><strong>Name group</strong></td>
+                    <td align="center"><strong>Number students</strong></td>
+                    <td align="center"><strong>Headman</strong></td>
                 </tr>
                 <tr class="table" ng-repeat="group in groupslist">
-                    <td class="active">{{ $index+1 }}</td>
-                    <td><a href="#/groups/{{ group.id }}">{{ group.name }}</a></td>
-                    <td>{{ group.students.length }}</td>
+                    <td align="center" class="active">{{ $index+1 }}</td>
+                    <td align="center"><a href="#/groups/{{ group.id }}">{{ group.name }}</a></td>
+                    <td align="center"><em>{{ group.students.length }}</em></td>
+                    <td align="center">
+                        <em ng-if="group.elder">{{ group.elder.surname }} {{ group.elder.first_name }} {{ group.elder.patronymic }}</em>
+                        <em ng-if="!group.elder" >No headman in group</em>
+                    </td>
                     <a class="ng-hide" href="#/groups/delete/{{ group.id}}">delete</a>
                 </tr>
             </table>

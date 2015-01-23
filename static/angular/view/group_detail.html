@@ -1,23 +1,21 @@
 <div class="row">
     <div class="col-xs-4">
-        {% if user.is_stuff %}
         <h3>Group: {{ group.name}}</h3>
         <button type="button" class="btn btn-primary btn-lg active" ng-click="del()">delete</button>
         <button type="button" class="btn btn-primary btn-lg active" ng-click="edit()">edit</button>
         <br/>
-        {% endif %}
-        {{ group.elder.surname }}
-        {{ group.elder.first_name }}
+        Headman: {{ group.elder.surname }}
+        {{ group.elder.id }}
     </div>
     <div class="col-xs-6">
         <table class="table table-bordered">
             <tr>
-                <td> № </td>
-                <td> Last name </td>
-                <td> First name </td>
-                <td> Patronymic </td>
-                <td> Card number </td>
-                <td> Birthday </td>
+                <td> <strong>№</strong> </td>
+                <td> <strong>Last name</strong> </td>
+                <td> <strong>First name </strong></td>
+                <td> <strong>Patronymic</strong> </td>
+                <td> <strong>Card number</strong> </td>
+                <td> <strong>Birthday</strong> </td>
 
             </tr>
             <tr ng-repeat="student in group.students">
@@ -27,11 +25,12 @@
                 <td>{{ student.patronymic }}</td>
                 <td>{{ student.card_number }}</td>
                 <td>{{ student.date_birthday }}</td>
+                <td><button ng-click="sdel(student)">delete</button></td>
             </tr>
         </table>
         <hr />
         <form name="studentForm" role="form">
-            <input type="text" id="surname" placeholder="Surname" ng-model="student.surname"/>
+            <input type="text" id="surname" placeholder="Last name" ng-model="student.surname"/>
             <input type="text" id="first_name" placeholder="First name" ng-model="student.first_name"/>
             <input type="text" id="Patronymic" placeholder="Patronymic" ng-model="student.patronymic"/>
             <input type="text" id="card_number" placeholder="card number" ng-model="student.card_number"/>

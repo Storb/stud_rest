@@ -1,0 +1,29 @@
+{
+  "name": "safe",
+  "version": "0.1.6",
+  "main": "safe.js",
+  "devDependencies": {
+    "history.js": "*"
+  },
+  "ignore": [
+    "bower_components",
+    "docs",
+    "docs_src",
+    "examples",
+    "node_modules",
+    "src",
+    "gulpfile.js",
+    ".gitignore"
+  ],
+  "homepage": "https://github.com/SuperAwesomeLTD/SAFE",
+  "_release": "0.1.6",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.1.6",
+    "commit": "96111dd40f418eae025913c1378e4b4a0a3127d1"
+  },
+  "_source": "git://github.com/SuperAwesomeLTD/SAFE.git",
+  "_target": "~0.1.6",
+  "_originalSource": "safe",
+  "_direct": true
+}

@@ -12,8 +12,8 @@ from rest_framework import viewsets
 @api_view(('GET',))
 def api_root(request, format=None):
     return Response({
-        'users': reverse('stud_db_urls:users', request=request, format=format),
-        'groups': reverse('stud_db_urls:groups', request=request, format=format),
+        'users': reverse('users', request=request, format=format),
+        'groups': reverse('groups', request=request, format=format),
     })
 
 

@@ -1,0 +1,15 @@
+{
+    "name": "safe",
+    "version": "0.1.6",
+    "private": true,
+    "dependencies": {},
+    "devDependencies": {
+    	"gulp-imports" : "MarcusLongmuir/gulp-imports",
+		"gulp-util": "^2.2.14",
+		"gulp": "^3.6.1",
+		"gulp-uglify": "^0.2.1",
+		"gulp-concat": "^2.2.0",
+		"gulp-watch": "^0.6.2",
+		"sa-docs-to-json": "SuperAwesomeLtd/sa-docs-to-json"
+	}
+}

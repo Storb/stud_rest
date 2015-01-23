@@ -11,7 +11,7 @@ var stud = angular.module('studApp', [
 ]);
 
 stud.config(['$routeProvider',
-    function($routeProvider, $ui){
+    function($routeProvider){
         $routeProvider.when('/groups/',{
                 templateUrl: vars.static_template + 'groups.html',
                 controller: 'groupsListCtrl'
@@ -42,13 +42,13 @@ stud.config(['$routeProvider',
             }).when('/student/add/', {
                 templateUrl: vars.static_template + 'student_add.html',
                 controller: 'studentAddCtrl'
-            }).when('/home/', {
-                templateUrl: '/templates/index.html',
-                controller: 'indexCtrl'
+            }).when('/login/', {
+                templateUrl: vars.static_template + 'login.html',
+                controller: 'LoginCtrl'
             });
     }]
 );
 stud.config(['$httpProvider', function($httpProvider) {
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
-    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';    }
-]);
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+}]);

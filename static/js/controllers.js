@@ -8,7 +8,7 @@ studControllers.controller('studentsListCtrl',
         $scope.students.$promise.then(function(){
             $scope.del = function(data){
 //                var currentId = data.id;
-                $http.delete('/api/students/' + data.id +'/').success(function(){
+                $http.delete('/students/' + data.id +'/').success(function(){
                     $scope.students = Students.query();
 //                    for (var j = 0; j < $scope.students.length; j++) {
 //                        if ($scope.students[j].id == currentId) {
@@ -26,16 +26,15 @@ studControllers.controller('studentsListCtrl',
 
 studControllers.controller('studentDetailCtrl',
     function($scope, Student, $routeParams, $http, $location){
-        $http.get('/api/students/'+$routeParams.id+'/').success(function(data) {
+        $http.get('/students/'+$routeParams.id+'/').success(function(data) {
             $scope.student = data;
-            console.log($scope.student.id)
         });
         $scope.del = function () {
             var student = {
                 'id': $scope.student.id,
                 'group': $scope.student.group
             };
-            $http.delete('/api/students/' + student.id + '/').success(function () {
+            $http.delete('/students/' + student.id + '/').success(function () {
                 $location.path('/groups/'+student.group+'/');
             });
         };
@@ -47,9 +46,9 @@ studControllers.controller('studentDetailCtrl',
         }
 });
 studControllers.controller('studentEditCtrl', function($scope, $location, $http, $routeParams){
-    $http.get('/api/students/'+$routeParams.id+'/').success(function(data){
+    $http.get('/students/'+$routeParams.id+'/').success(function(data){
         $scope.student = data;
-        $http.get('/api/groups/').success(function(data){
+        $http.get('/groups/').success(function(data){
             $scope.groups = data;
             for(var i=0; i < data.length; i++){
                 if($scope.student.group == data[i].id){
@@ -67,13 +66,13 @@ studControllers.controller('studentEditCtrl', function($scope, $location, $http,
             'date_birthday': $scope.student.date_birthday,
             'card_number': $scope.student.card_number
         };
-        $http.put('/api/students/'+$routeParams.id+'/', student).success(function(){
+        $http.put('/students/'+$routeParams.id+'/', student).success(function(){
             $location.path('/students/'+$routeParams.id+'/');
         });
     };
 });
 studControllers.controller('studentAddCtrl', function($scope, $location, $http){
-    $http.get('/api/groups/').success(function(data) {
+    $http.get('/groups/').success(function(data) {
             $scope.groups = data;
         });
     $scope.student = '';
@@ -88,21 +87,32 @@ studControllers.controller('studentAddCtrl', function($scope, $location, $http){
         if ($scope.group){
             student['group'] = $scope.group.id
         }
-        $http.post('/api/students/', student).success(function(){
+        $http.post('/students/', student).success(function(){
             $location.path('/groups/');
         });
     }
 });
 studControllers.controller('studentDeleteCtrl', function($scope, $location, $http, $routeParams){
     $scope.submit = function(){
-        $http.delete('/api/students/'+$routeParams.id+'/', $scope.student).success(function(){
+        $http.delete('/students/'+$routeParams.id+'/', $scope.student).success(function(){
             $location.path('/students/');
         });
     }
 });
 studControllers.controller('groupsListCtrl',
-    function($scope, GroupsList) {
+    function($scope, GroupsList, $http) {
         $scope.groupslist = GroupsList.query();
+        $scope.groupslist.$promise.then(function(){
+            $http.get('/students/').success(function(data){
+                for(var i=0; i< $scope.groupslist.length; i++){
+                    for(var j=0; j< data.length; j++){
+                        if(data[j].id == $scope.groupslist[i].elder){
+                            $scope.groupslist[i].elder=data[j]
+                        }
+                    }
+                }
+            });
+        });
     });
 
 studControllers.controller('groupAddCtrl', function($scope, $location, $http){
@@ -112,14 +122,14 @@ studControllers.controller('groupAddCtrl', function($scope, $location, $http){
             'name': $scope.group.name,
             'elder': $scope.group.elder
         };
-        $http.post('/api/groups/', group).success(function(data){
+        $http.post('/groups/', group).success(function(data){
             $location.path('/groups/' + data.id + '/');
         });
     };
 });
 studControllers.controller('groupDeleteCtrl', function($scope, $location, $http, $routeParams){
     $scope.submit = function(){
-        $http.delete('/api/groups/'+$routeParams.id+'/', $scope.group).success(function(){
+        $http.delete('/groups/'+$routeParams.id+'/', $scope.group).success(function(){
             $location.path('/groups/');
         });
     }
@@ -128,7 +138,7 @@ studControllers.controller('groupDetailCtrl',
     function($scope, Group, $routeParams, $http, $location){
         $scope.group = Group.get({Id: $routeParams.id});
         $scope.del = function () {
-            $http.delete('/api/groups/' + $scope.group.id + '/', $scope.group).success(function () {
+            $http.delete('/groups/' + $scope.group.id + '/', $scope.group).success(function () {
                 $location.path('/groups/');
             });
         };
@@ -145,11 +155,16 @@ studControllers.controller('groupDetailCtrl',
                 'date_birthday': $scope.student.date_birthday,
                 'card_number': $scope.student.card_number
             };
-            $http.post('/api/students/', student).success(function (data) {
+            $http.post('/students/', student).success(function (data) {
                 $scope.group.students.push(data);
             });
         };
-        $http.get('/api/groups/'+$routeParams.id+'/').success(function(data){
+        $scope.sdel = function(student){
+            $http.delete('/students/'+ student.id+'/', student).success(function(){
+                $scope.group = Group.get({Id: $routeParams.id})
+            });
+        };
+        $http.get('/groups/'+$routeParams.id+'/').success(function(data){
             $scope.group = data;
             $scope.students = $scope.group.students;
             for(var i=0; i < $scope.students.length; i++){
@@ -160,7 +175,7 @@ studControllers.controller('groupDetailCtrl',
         })
 });
 studControllers.controller('groupEditCtrl', function($scope, $location, $http, $routeParams){
-    $http.get('/api/groups/'+$routeParams.id+'/').success(function(data){
+    $http.get('/groups/'+$routeParams.id+'/').success(function(data){
         $scope.group = data;
         $scope.students = $scope.group.students;
         for(var i=0; i < $scope.students.length; i++){
@@ -171,18 +186,8 @@ studControllers.controller('groupEditCtrl', function($scope, $location, $http, $
     });
     $scope.submit = function(){
         $scope.group.elder = $scope.group.elder.id;
-        $http.put('/api/groups/'+$routeParams.id+'/', $scope.group).success(function(){
+        $http.put('/groups/'+$routeParams.id+'/', $scope.group).success(function(){
             $location.path('/groups/'+$routeParams.id+'/');
         });
     }
-});
-studControllers.controller('indexCtrl', function($scope, $location, $http){
-    $http.get('/api/groups/').success(function(data){
-        $scope.groups = data;
-    });
-    $http.get('/api/students/').success(function(data){
-        $scope.students = data;
-    });
-
-
 });
