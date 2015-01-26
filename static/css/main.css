@@ -33,3 +33,15 @@
     border-color: #FFFFFF;
     background-color: #58cbfe;
 }
+
+#col1 {
+    width: 3%;
+}
+
+#col2 {
+    width: 10%;
+}
+
+#col3 {
+    width: 15%;
+}

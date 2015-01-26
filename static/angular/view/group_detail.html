@@ -4,13 +4,12 @@
         <button type="button" class="btn btn-primary btn-lg active" ng-click="del()">delete</button>
         <button type="button" class="btn btn-primary btn-lg active" ng-click="edit()">edit</button>
         <br/>
-        Headman: {{ group.elder.surname }}
-        {{ group.elder.id }}
+        Headman: {{ group.elder.surname }} {{ group.elder.first_name[0] }}.{{ group.elder.patronymic[0] }}.
     </div>
     <div class="col-xs-6">
         <table class="table table-bordered">
             <tr>
-                <td> <strong>№</strong> </td>
+                <td id="col1"> <strong>№</strong> </td>
                 <td> <strong>Last name</strong> </td>
                 <td> <strong>First name </strong></td>
                 <td> <strong>Patronymic</strong> </td>
@@ -19,22 +18,43 @@
 
             </tr>
             <tr ng-repeat="student in group.students">
-                <td>{{ $index + 1 }}</td>
-                <td>{{ student.surname }}</td>
-                <td>{{ student.first_name }}</td>
-                <td>{{ student.patronymic }}</td>
-                <td>{{ student.card_number }}</td>
-                <td>{{ student.date_birthday }}</td>
-                <td><button ng-click="sdel(student)">delete</button></td>
+                <form>
+                <td id="col1">{{ $index + 1 }}</td>
+                <td>
+                    <div ng-hide="student.modifying">{{ student.surname }}</div>
+                    <div ng-show="student.modifying"><input style="width: auto" type="text" ng-model="student.surname" /></div>
+                </td>
+                <td>
+                    <div ng-hide="student.modifying">{{ student.first_name }} </div>
+                    <div ng-show="student.modifying"><input type="text" ng-model="student.first_name" /></div>
+                </td>
+                <td>
+                    <div ng-hide="student.modifying">{{ student.patronymic }} </div>
+                    <div ng-show="student.modifying"><input type="text" ng-model="student.patronymic" /></div>
+                </td>
+                <td id="col2">
+                    <div ng-hide="student.modifying">{{ student.card_number }} </div>
+                    <div ng-show="student.modifying"><input style="width: 100px" type="text" ng-model="student.card_number" /></div>
+                </td>
+                <td id="col2">
+                    <div ng-hide="student.modifying">{{ student.date_birthday }} </div>
+                    <div ng-show="student.modifying"><input style="width: 100px" type="text" ng-model="student.date_birthday" /></div>
+                </td>
+                <td id="col3">
+                    <button ng-hide="student.modifying" ng-click="student.modifying = true;">Modify</button>
+                    <button ng-show="student.modifying" ng-click="update(student); student.modifying = false;">Update</button>
+                    <button ng-hide="student.modifying" ng-click="sdel(student)">delete</button>
+                </td>
+            </form>
             </tr>
         </table>
         <hr />
         <form name="studentForm" role="form">
-            <input type="text" id="surname" placeholder="Last name" ng-model="student.surname"/>
-            <input type="text" id="first_name" placeholder="First name" ng-model="student.first_name"/>
-            <input type="text" id="Patronymic" placeholder="Patronymic" ng-model="student.patronymic"/>
-            <input type="text" id="card_number" placeholder="card number" ng-model="student.card_number"/>
-            <input type="text" id="date_birthday" placeholder="birthday" ng-model="student.date_birthday"/>
+            <input type="text" placeholder="Last name" ng-model="student.surname" />
+            <input type="text" placeholder="First name" ng-model="student.first_name"/>
+            <input type="text" placeholder="Patronymic" ng-model="student.patronymic"/>
+            <input type="text" placeholder="card number" ng-model="student.card_number"/>
+            <input type="text" placeholder="birthday" ng-model="student.date_birthday"/>
             <button ng-click="submit()">Add student</button>
         </form>
     </div>

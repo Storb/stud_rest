@@ -3,25 +3,43 @@
 var studControllers = angular.module('studControllers', []);
 
 studControllers.controller('studentsListCtrl',
-    function($scope, Students, $routeParams,$http, $location){
-        $scope.students = Students.query();
-        $scope.students.$promise.then(function(){
-            $scope.del = function(data){
-//                var currentId = data.id;
-                $http.delete('/students/' + data.id +'/').success(function(){
-                    $scope.students = Students.query();
-//                    for (var j = 0; j < $scope.students.length; j++) {
-//                        if ($scope.students[j].id == currentId) {
-//                            $scope.students.splice(j, 1);
-//                            break;
-//                        }
-//                    }
-                });
-            };
-            $scope.edit = function(data){
-                $location.path('/students/edit/' + data.id + '/');
+    function($scope, Students, $routeParams,$http){
+        var formatStudents = function(students, groups) {
+            for (var j = 0; j < groups.length; j++){
+                for (var i = 0; i< students.length; i++) {
+                    if (students[i].group == groups[j].id) {
+                        students[i].group = groups[j];
+                    }
+                }
             }
-        });
+            return students;
+        };
+
+        $scope.del = function(student){
+            $http.delete('/students/' + student.id +'/').success(function(student){
+                $scope.students.pop(student.id);
+            });
+        };
+
+        $scope.update = function(data){
+            var student = {
+                'group': data.group.id,
+                'first_name': data.first_name,
+                'patronymic': data.patronymic,
+                'surname': data.surname,
+                'date_birthday': data.date_birthday,
+                'card_number': data.card_number
+            };
+            $http.put('/students/'+data.id+'/', student);
+        };
+
+        var studentsPromise = Students.query().$promise;
+        studentsPromise.then(function(students) {
+            $http.get('/groups/').success(function(groups){
+                $scope.groups = groups;
+                $scope.students = formatStudents(students, groups);
+            });
+        })
  });
 
 studControllers.controller('studentDetailCtrl',
@@ -66,6 +84,7 @@ studControllers.controller('studentEditCtrl', function($scope, $location, $http,
             'date_birthday': $scope.student.date_birthday,
             'card_number': $scope.student.card_number
         };
+        console.log(student);
         $http.put('/students/'+$routeParams.id+'/', student).success(function(){
             $location.path('/students/'+$routeParams.id+'/');
         });
@@ -74,7 +93,7 @@ studControllers.controller('studentEditCtrl', function($scope, $location, $http,
 studControllers.controller('studentAddCtrl', function($scope, $location, $http){
     $http.get('/groups/').success(function(data) {
             $scope.groups = data;
-        });
+    });
     $scope.student = '';
     $scope.submit = function(){
         var student = {
@@ -92,13 +111,7 @@ studControllers.controller('studentAddCtrl', function($scope, $location, $http){
         });
     }
 });
-studControllers.controller('studentDeleteCtrl', function($scope, $location, $http, $routeParams){
-    $scope.submit = function(){
-        $http.delete('/students/'+$routeParams.id+'/', $scope.student).success(function(){
-            $location.path('/students/');
-        });
-    }
-});
+
 studControllers.controller('groupsListCtrl',
     function($scope, GroupsList, $http) {
         $scope.groupslist = GroupsList.query();
@@ -118,12 +131,9 @@ studControllers.controller('groupsListCtrl',
 studControllers.controller('groupAddCtrl', function($scope, $location, $http){
     $scope.group = '';
     $scope.submit = function(){
-        var group = {
-            'name': $scope.group.name,
-            'elder': $scope.group.elder
-        };
-        $http.post('/groups/', group).success(function(data){
-            $location.path('/groups/' + data.id + '/');
+        $http.post('/groups/', $scope.group).then(function(data){
+            console.log(data);
+            $location.path('/groups/' + data.data.id + '/');
         });
     };
 });
@@ -142,11 +152,15 @@ studControllers.controller('groupDetailCtrl',
                 $location.path('/groups/');
             });
         };
+
         $scope.edit = function(){
             $location.path('/group/edit/' + $scope.group.id + '/');
         };
+
         $scope.student = '';
-        $scope.submit = function() {
+
+        $scope.submit = function(student) {
+//            student['group'] = $scope.group.id;
             var student = {
                 'group': $scope.group.id,
                 'first_name': $scope.student.first_name,
@@ -159,11 +173,17 @@ studControllers.controller('groupDetailCtrl',
                 $scope.group.students.push(data);
             });
         };
+
         $scope.sdel = function(student){
             $http.delete('/students/'+ student.id+'/', student).success(function(){
                 $scope.group = Group.get({Id: $routeParams.id})
             });
         };
+
+         $scope.update = function (student) {
+             $http.put('/students/' + student.id +'/', student)
+         };
+
         $http.get('/groups/'+$routeParams.id+'/').success(function(data){
             $scope.group = data;
             $scope.students = $scope.group.students;
@@ -178,16 +198,23 @@ studControllers.controller('groupEditCtrl', function($scope, $location, $http, $
     $http.get('/groups/'+$routeParams.id+'/').success(function(data){
         $scope.group = data;
         $scope.students = $scope.group.students;
-        for(var i=0; i < $scope.students.length; i++){
-            if($scope.students[i].id == $scope.group.elder){
-                $scope.group.elder = $scope.students[i];
+        for(var i=0; i<$scope.students.length; i++){
+            if($scope.group.elder == $scope.students[i].id){
+                $scope.group.elder = $scope.students[i]
             }
         }
+        if($scope.group.students == 0){
+            $scope.students = false;
+        }
+        console.log($scope.group.elder);
     });
-    $scope.submit = function(){
-        $scope.group.elder = $scope.group.elder.id;
-        $http.put('/groups/'+$routeParams.id+'/', $scope.group).success(function(){
-            $location.path('/groups/'+$routeParams.id+'/');
+    $scope.submit = function(data){
+        var group = {
+            'name': data.name,
+            'elder': data.elder.id
+        };
+        $http.put('/groups/' + $scope.group.id + '/', group).success(function(data){
+            $location.path('/groups/'+data.id+'/');
         });
     }
 });

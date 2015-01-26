@@ -18,7 +18,7 @@
                     <td align="center"><em>{{ group.students.length }}</em></td>
                     <td align="center">
                         <em ng-if="group.elder">{{ group.elder.surname }} {{ group.elder.first_name }} {{ group.elder.patronymic }}</em>
-                        <em ng-if="!group.elder" >No headman in group</em>
+                        <em ng-if="!group.elder" >- - - - - - -</em>
                     </td>
                     <a class="ng-hide" href="#/groups/delete/{{ group.id}}">delete</a>
                 </tr>

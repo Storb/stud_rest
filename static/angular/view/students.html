@@ -1,22 +1,47 @@
 <table class="table table-bordered">
-    <tr>
-        <td> № </td>
-        <td> Last name </td>
-        <td> First name </td>
-        <td> Patronymic </td>
-        <td> Card number </td>
-        <td> Birthday </td>
+        <tr>
+            <td> Group </td>
+            <td> Last name </td>
+            <td> First name </td>
+            <td> Patronymic </td>
+            <td> Card number </td>
+            <td> Birthday </td>
 
-    </tr>
-    <tr ng-repeat="student in students">
-        <td>{{ index + 1 }}</td>
-        <td>{{ student.surname }}</td>
-        <td>{{ student.first_name }}</td>
-        <td>{{ student.patronymic }}</td>
-        <td>{{ student.card_number}}</td>
-        <td>{{ student.date_birthday }}</td>
-        <td><button ng-click="edit(student)">edit</button>
-        <button ng-click="del(student)">delete</button></td>
-    </tr>
+        </tr>
+        <tr ng-repeat="student in students">
+            <form>
+                <td>
+                    <div ng-hide="student.modifying">{{ student.group.name }}</div>
+                    <div ng-show="student.modifying">
+                        <select ng-model="student.group" ng-options="group as group.name for group in groups track by group.id" required></select>
+                    </div>
+                </td>
+                <td>
+                    <div ng-hide="student.modifying">{{ student.surname }}</div>
+                    <div ng-show="student.modifying"><input type="text" ng-model="student.surname" /></div>
+                </td>
+                <td>
+                    <div ng-hide="student.modifying">{{ student.first_name }} </div>
+                    <div ng-show="student.modifying"><input type="text" ng-model="student.first_name" /></div>
+                </td>
+                <td>
+                    <div ng-hide="student.modifying">{{ student.patronymic }} </div>
+                    <div ng-show="student.modifying"><input type="text" ng-model="student.patronymic" /></div>
+                </td>
+                <td>
+                    <div ng-hide="student.modifying">{{ student.card_number }} </div>
+                    <div ng-show="student.modifying"><input type="text" ng-model="student.card_number" /></div>
+                </td>
+                <td>
+                    <div ng-hide="student.modifying">{{ student.date_birthday }} </div>
+                    <div ng-show="student.modifying"><input type="text" ng-model="student.date_birthday" /></div>
+                </td>
+                <td id="col3">
+                    <button ng-hide="student.modifying" ng-click="student.modifying = true;">Modify</button>
+                    <button ng-show="student.modifying" ng-click="update(student); student.modifying = false;">Update</button>
+                    <button ng-hide="student.modifying" ng-click="del(student)">delete</button>
+                </td>
+            </form>
+        </tr>
 </table>
 

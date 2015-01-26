@@ -7,7 +7,8 @@ var stud = angular.module('studApp', [
     'ngRoute',
 	'ngResource',
     'studentServices',
-    'studControllers'
+    'studControllers',
+    'editStudent'
 ]);
 
 stud.config(['$routeProvider',

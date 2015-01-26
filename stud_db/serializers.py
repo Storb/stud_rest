@@ -15,14 +15,11 @@ class StudentSerializer(serializers.ModelSerializer):
 
 
 class GroupSerializer(serializers.ModelSerializer):
-    students = serializers.SerializerMethodField()
+    students = StudentSerializer(many=True, read_only=False, required=False)
 
     class Meta:
         model = Group
         field = ('elder', 'name')
-
-    def get_students(self, obj):
-        return StudentSerializer(obj.students.all(), many=True).data
 
 class UserSerializer(serializers.ModelSerializer):
     students = serializers.PrimaryKeyRelatedField(
