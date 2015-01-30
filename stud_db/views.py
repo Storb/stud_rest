@@ -21,6 +21,7 @@ class GroupList(generics.ListCreateAPIView):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
 
+
 class GroupDetail(generics.RetrieveUpdateDestroyAPIView):
     model = Group
     queryset = Group.objects.all()
@@ -30,16 +31,17 @@ class GroupDetail(generics.RetrieveUpdateDestroyAPIView):
 class StudentList(generics.ListCreateAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    # permission_classes = (permissions.IsAuthenticated,)
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
+
 class StudentDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
-    permission_classes = (permissions.IsAuthenticated,
-                          IsOwnerOrReadOnly,)
+    # permission_classes = (permissions.IsAuthenticated,
+    #                       IsOwnerOrReadOnly,)
 
 
 class UsersList(generics.ListAPIView):
@@ -50,6 +52,7 @@ class UsersList(generics.ListAPIView):
 class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
 
 # class GroupViewSet(viewsets.ModelViewSet):
 #     """
@@ -86,6 +89,3 @@ class UserDetail(generics.RetrieveAPIView):
 #     """
 #     queryset = User.objects.all()
 #     serializer_class = UserSerializer
-
-
-

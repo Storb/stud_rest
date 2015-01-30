@@ -8,32 +8,16 @@
 <body>
 
 <div class="row" >
-        <a href="#/groups/">Groups</a>
-        <a href="#/students/">Students</a>
-        <a href="#/">Home</a>
+        <a class="btn btn-default" href="#/groups/" role="button">Groups</a>
+        <a class="btn btn-default" href="#/students/" role="button">Students</a>
+        <a class="btn btn-default" href="#" role="button">Home</a>
     <hr />
-
     <div class="col-md-8">
         {% verbatim %}
-        <div ng-view>
-
-        </div>
+        <div ng-view></div>
         {% endverbatim %}
     </div>
-    <div class="col-md-4">
-        {% comment %}
-        <form>
-        <div class="form-group">
-            <label for="exampleInputEmail1">Username/Email</label>
-            <input ng-model="user.username" type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter email" n>
-        </div>{{ user.username }}
-        <div class="form-group">
-            <label for="exampleInputPassword1">Пароль</label>
-            <input ng-model="user.password" class="form-control" id="password" placeholder="Password">
-            <button ng-model="submit()">Отправить</button>
-        </div>
-    </form>
-    {% endcomment %}
+    <div class="col-md-4" >
     </div>
 </div>
 <script src="/static/angular/bower_components/angular/angular.js"></script>
@@ -42,6 +26,5 @@
 <script src="{% static "js/app.js" %}"></script>
 <script src="{% static "js/controllers.js" %}"></script>
 <script src="{% static "js/services.js" %}"></script>
-<script src="{% static "js/directives.js" %}"></script>
 </body>
 </html>

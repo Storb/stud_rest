@@ -7,8 +7,7 @@ var stud = angular.module('studApp', [
     'ngRoute',
 	'ngResource',
     'studentServices',
-    'studControllers',
-    'editStudent'
+    'studControllers'
 ]);
 
 stud.config(['$routeProvider',
@@ -22,9 +21,6 @@ stud.config(['$routeProvider',
             }).when('/group/add/', {
                 templateUrl: vars.static_template + 'group_add.html',
                 controller: 'groupAddCtrl'
-            }).when('/groups/delete/:id/', {
-                templateUrl: vars.static_template + 'group_delete.html',
-                controller: 'groupDeleteCtrl'
             }).when('/group/edit/:id/', {
                 templateUrl: vars.static_template + 'group_edit.html',
                 controller: 'groupEditCtrl'
@@ -37,15 +33,9 @@ stud.config(['$routeProvider',
             }).when('/students/edit/:id', {
                 templateUrl: vars.static_template + 'student_edit.html',
                 controller: 'studentEditCtrl'
-            }).when('/students/delete/:id', {
-                templateUrl: vars.static_template + 'student_delete.html',
-                controller: 'studentDeleteCtrl'
             }).when('/student/add/', {
                 templateUrl: vars.static_template + 'student_add.html',
                 controller: 'studentAddCtrl'
-            }).when('/login/', {
-                templateUrl: vars.static_template + 'login.html',
-                controller: 'LoginCtrl'
             });
     }]
 );

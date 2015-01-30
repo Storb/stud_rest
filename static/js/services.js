@@ -3,7 +3,10 @@ var studServices = angular.module('studentServices', ['ngResource', 'ngRoute']);
 
 studServices.factory('Students',
     function($resource){
-        return $resource('/students/');
+        return $resource('/students/' ,
+            {
+                'add': { method: 'POST', params: { add: true }}
+            });
     }
 );
 
@@ -13,22 +16,18 @@ studServices.factory('GroupsList',
     }
 );
 
-studServices.factory('Group',['$resource',
+studServices.factory('Group',
     function($resource){
-        return $resource('/groups/:Id/', {Id:'@id'});
-}]);
+        return $resource('/groups/:Id/', null);
+});
 studServices.factory('Student',
     function($resource){
-        return $resource('/students/:Id/', {Id:'@id'});
+        return $resource('/students/:Id/', null,
+            {
+                'update': { method:'PUT' }
+            });
     }
 );
-
-
-
-
-
-
-
 
 
 

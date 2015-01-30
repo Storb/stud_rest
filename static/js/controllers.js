@@ -3,7 +3,7 @@
 var studControllers = angular.module('studControllers', []);
 
 studControllers.controller('studentsListCtrl',
-    function($scope, Students, $routeParams,$http){
+    function($scope, Students, Student, $routeParams,$http){
         var formatStudents = function(students, groups) {
             for (var j = 0; j < groups.length; j++){
                 for (var i = 0; i< students.length; i++) {
@@ -16,12 +16,11 @@ studControllers.controller('studentsListCtrl',
         };
 
         $scope.del = function(student){
-            $http.delete('/students/' + student.id +'/').success(function(student){
-                $scope.students.pop(student.id);
-            });
+            Student.delete({Id: student.id});
+            $scope.students.pop(student.id);
         };
 
-        $scope.update = function(data){
+        $scope.update = function(data) {
             var student = {
                 'group': data.group.id,
                 'first_name': data.first_name,
@@ -30,7 +29,8 @@ studControllers.controller('studentsListCtrl',
                 'date_birthday': data.date_birthday,
                 'card_number': data.card_number
             };
-            $http.put('/students/'+data.id+'/', student);
+            Student.update({Id: data.id}, student);
+            $scope.students.push(student);
         };
 
         var studentsPromise = Students.query().$promise;
@@ -44,18 +44,13 @@ studControllers.controller('studentsListCtrl',
 
 studControllers.controller('studentDetailCtrl',
     function($scope, Student, $routeParams, $http, $location){
-        $http.get('/students/'+$routeParams.id+'/').success(function(data) {
-            $scope.student = data;
-        });
+        $scope.student = Student.get({Id: $routeParams.id});
+
         $scope.del = function () {
-            var student = {
-                'id': $scope.student.id,
-                'group': $scope.student.group
-            };
-            $http.delete('/students/' + student.id + '/').success(function () {
-                $location.path('/groups/'+student.group+'/');
-            });
+            Student.delete({Id: $routeParams.id});
+            $location.path('/students/');
         };
+
         $scope.edeet = function(){
             var student = {
                 'id': $scope.student.id
@@ -114,8 +109,9 @@ studControllers.controller('studentAddCtrl', function($scope, $location, $http){
 
 studControllers.controller('groupsListCtrl',
     function($scope, GroupsList, $http) {
-        $scope.groupslist = GroupsList.query();
-        $scope.groupslist.$promise.then(function(){
+        var groupPromise = GroupsList.query().$promise;
+        groupPromise.then(function(groups){
+            $scope.groupslist = groups;
             $http.get('/students/').success(function(data){
                 for(var i=0; i< $scope.groupslist.length; i++){
                     for(var j=0; j< data.length; j++){
@@ -137,20 +133,13 @@ studControllers.controller('groupAddCtrl', function($scope, $location, $http){
         });
     };
 });
-studControllers.controller('groupDeleteCtrl', function($scope, $location, $http, $routeParams){
-    $scope.submit = function(){
-        $http.delete('/groups/'+$routeParams.id+'/', $scope.group).success(function(){
-            $location.path('/groups/');
-        });
-    }
-});
+
 studControllers.controller('groupDetailCtrl',
     function($scope, Group, $routeParams, $http, $location){
         $scope.group = Group.get({Id: $routeParams.id});
         $scope.del = function () {
-            $http.delete('/groups/' + $scope.group.id + '/', $scope.group).success(function () {
-                $location.path('/groups/');
-            });
+            Group.delete({Id: $routeParams.id});
+            $location.path('/groups/');
         };
 
         $scope.edit = function(){
@@ -159,9 +148,8 @@ studControllers.controller('groupDetailCtrl',
 
         $scope.student = '';
 
-        $scope.submit = function(student) {
-//            student['group'] = $scope.group.id;
-            var student = {
+        $scope.submit = function() {
+            var stud = {
                 'group': $scope.group.id,
                 'first_name': $scope.student.first_name,
                 'patronymic': $scope.student.patronymic,
@@ -169,7 +157,7 @@ studControllers.controller('groupDetailCtrl',
                 'date_birthday': $scope.student.date_birthday,
                 'card_number': $scope.student.card_number
             };
-            $http.post('/students/', student).success(function (data) {
+            $http.post('/students/', stud).success(function (data) {
                 $scope.group.students.push(data);
             });
         };
@@ -218,3 +206,4 @@ studControllers.controller('groupEditCtrl', function($scope, $location, $http, $
         });
     }
 });
+
